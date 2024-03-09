@@ -21,9 +21,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // parse application
 app.use(cookieParser());
 
-// app.get("/", (req, res) => {
-//   res.send("Api is working");
-// });
+app.get("/", (req, res) => {
+  res.send("Api is working");
+});
 app.use(router);
 
 // --------------------------deployment------------------------------
