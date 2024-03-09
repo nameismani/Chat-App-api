@@ -28,21 +28,21 @@ app.use(router);
 
 // --------------------------deployment------------------------------
 
-const __dirname1 = path.resolve();
-console.log(path.join(__dirname1, "..", "/frontend/build"));
-if (process.env.NODE_ENV === "production") {
-  console.log("production");
-  app.use(express.static(path.join(__dirname1, "..", "/client/dist")));
+// const __dirname1 = path.resolve();
+// console.log(path.join(__dirname1, "..", "/frontend/build"));
+// if (process.env.NODE_ENV === "production") {
+//   console.log("production");
+//   app.use(express.static(path.join(__dirname1, "..", "/client/dist")));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.join(__dirname1, "..", "client", "dist", "index.html"))
-  );
-} else {
-  app.get("/", (req, res) => {
-    console.log("development");
-    res.send("API is running..");
-  });
-}
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.join(__dirname1, "..", "client", "dist", "index.html"))
+//   );
+// } else {
+//   app.get("/", (req, res) => {
+//     console.log("development");
+//     res.send("API is running..");
+//   });
+// }
 
 // --------------------------deployment------------------------------
 
