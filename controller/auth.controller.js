@@ -35,7 +35,7 @@ const registerUser = async (req, res, next) => {
       res
         .status(201)
         .cookie("access_token", token, {
-          httpOnly: true,
+          // httpOnly: true,
           //   sameSite: "strict",
           maxAge: 10 * 24 * 60 * 60 * 1000,
         })
@@ -71,7 +71,7 @@ const signIn = async (req, res, next) => {
       res
         .status(201)
         .cookie("access_token", token, {
-          httpOnly: true,
+          // httpOnly: true,
           //   sameSite: "strict",
           maxAge: 10 * 24 * 60 * 60 * 1000,
         })
