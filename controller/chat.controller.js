@@ -6,9 +6,9 @@ const User = require("../model/User.model");
 //@access          Protected
 const accessChat = async (req, res) => {
   const { userId } = req.body;
-  req.user = {
-    _id: "65eaf4bb5467cbd421431bab",
-  };
+  // req.user = {
+  //   _id: "65eaf4bb5467cbd421431bab",
+  // };
 
   if (!userId) {
     console.log("UserId param not sent with request");
@@ -18,7 +18,7 @@ const accessChat = async (req, res) => {
   var isChat = await Chat.find({
     isGroupChat: false,
     $and: [
-      { users: { $elemMatch: { $eq: req.user._id } } },
+      { users: { $elemMatch: { $eq: req.user.userId } } },
       { users: { $elemMatch: { $eq: userId } } },
     ],
   })
@@ -36,7 +36,7 @@ const accessChat = async (req, res) => {
     var chatData = {
       chatName: "sender",
       isGroupChat: false,
-      users: [req.user._id, userId],
+      users: [req.user.userId, userId],
     };
 
     try {
@@ -55,11 +55,11 @@ const accessChat = async (req, res) => {
 
 // access all chat
 const fetchChats = async (req, res, next) => {
-  req.user = {
-    _id: "65eaf4bb5467cbd421431bab",
-  };
+  // req.user = {
+  //   _id: "65eaf4bb5467cbd421431bab",
+  // };
   try {
-    Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+    Chat.find({ users: { $elemMatch: { $eq: req.user.userId } } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
@@ -80,9 +80,9 @@ const fetchChats = async (req, res, next) => {
 // group chat
 const createGroupChat = async (req, res, next) => {
   let { users, name } = req.body;
-  req.user = {
-    _id: "65eaf4bb5467cbd421431bab",
-  };
+  // req.user = {
+  //   _id: "65eaf4bb5467cbd421431bab",
+  // };
   if (!users || !name) {
     return res.status(400).send({ message: "Please Fill all the feilds" });
   }
@@ -95,14 +95,14 @@ const createGroupChat = async (req, res, next) => {
       .send("More than 2 users are required to form a group chat");
   }
 
-  users.push(req.user);
+  users.push(req.user.userId);
 
   try {
     const groupChat = await Chat.create({
       chatName: req.body.name,
       users: users,
       isGroupChat: true,
-      groupAdmin: req.user,
+      groupAdmin: req.user.userId,
     });
 
     const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
@@ -193,7 +193,7 @@ const removeFromGroup = async (req, res, next) => {
   } else {
     res.json({
       success: true,
-      added,
+      removed,
     });
   }
 };
@@ -203,4 +203,5 @@ module.exports = {
   createGroupChat,
   renameGroup,
   addToGroup,
+  removeFromGroup,
 };

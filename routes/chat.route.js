@@ -8,14 +8,16 @@ const {
   createGroupChat,
   renameGroup,
   addToGroup,
+  removeFromGroup,
 } = require("../controller/chat.controller");
+const { verifyToken } = require("../middleware/authMiddleware");
 
-router.route("/").get(fetchChats).post(accessChat);
+router.route("/").get(verifyToken, fetchChats).post(verifyToken, accessChat);
 
-router.route("/group").post(createGroupChat);
-router.route("/rename").put(renameGroup);
-router.route("/groupadd").put(addToGroup);
-// router.route("/groupremove").put(protect, removeFromGroup);
+router.route("/group").post(verifyToken, createGroupChat);
+router.route("/rename").put(verifyToken, renameGroup);
+router.route("/groupadd").put(verifyToken, addToGroup);
+router.route("/groupremove").put(verifyToken, removeFromGroup);
 
 // router.route("/").get(async (req, res) => {
 //   const data = JSON.parse(
