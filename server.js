@@ -8,6 +8,7 @@ const errorMiddleware = require("./middleware/errorMiddleware");
 const cookieParser = require("cookie-parser");
 dotenv.config();
 const app = express();
+const path = require("path");
 
 const PORT = process.env.PORT || 8000;
 
@@ -20,10 +21,31 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // parse application
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-  res.send("Api is working");
-});
+// app.get("/", (req, res) => {
+//   res.send("Api is working");
+// });
 app.use(router);
+
+// --------------------------deployment------------------------------
+
+const __dirname1 = path.resolve();
+console.log(path.join(__dirname1, "..", "/frontend/build"));
+if (process.env.NODE_ENV === "production") {
+  console.log("production");
+  app.use(express.static(path.join(__dirname1, "..", "/client/dist")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(__dirname1, "..", "client", "dist", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    console.log("development");
+    res.send("API is running..");
+  });
+}
+
+// --------------------------deployment------------------------------
+
 app.use(errorMiddleware);
 
 const server = app.listen(PORT, () => {
@@ -33,11 +55,8 @@ const server = app.listen(PORT, () => {
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: [
-      "http://localhost:5173",
-      "https://mern-live-chat-app.netlify.app/",
-    ],
-    // credentials: true,
+    origin: "https://mern-live-chat-app.netlify.app/",
+    credentials: true,
   },
 });
 
