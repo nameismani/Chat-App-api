@@ -16,7 +16,14 @@ const PORT = process.env.PORT || 8000;
 dbConnection();
 
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    optionsSuccessStatus: 200,
+    methods: ["POST", "GET", "PUT", "PATCH"],
+    origin: ["http://localhost:5173"],
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // parse application
 app.use(cookieParser());
