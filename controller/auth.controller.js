@@ -37,6 +37,9 @@ const registerUser = async (req, res, next) => {
         .cookie("access_token", token, {
           // httpOnly: true,
           //   sameSite: "strict",
+          secure: true,
+          httpOnly: false,
+          sameSite: "None",
           maxAge: 10 * 24 * 60 * 60 * 1000,
         })
         .json({
@@ -73,6 +76,9 @@ const signIn = async (req, res, next) => {
         .cookie("access_token", token, {
           // httpOnly: true,
           //   sameSite: "strict",
+          secure: true,
+          httpOnly: false,
+          sameSite: "None",
           maxAge: 10 * 24 * 60 * 60 * 1000,
         })
         .json({
