@@ -38,7 +38,7 @@ const registerUser = async (req, res, next) => {
           // httpOnly: true,
           //   sameSite: "strict",
           secure: true,
-          httpOnly: true,
+          // httpOnly: true,
           // sameSite: "None",
           maxAge: 10 * 24 * 60 * 60 * 1000,
         })
@@ -77,7 +77,7 @@ const signIn = async (req, res, next) => {
           // httpOnly: true,
           //   sameSite: "strict",
           secure: true,
-          httpOnly: true,
+          // httpOnly: true,
           // sameSite: "None",
           maxAge: 10 * 24 * 60 * 60 * 1000,
         })
