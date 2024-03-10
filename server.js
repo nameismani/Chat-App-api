@@ -21,7 +21,7 @@ app.use(
     credentials: true,
     optionsSuccessStatus: 200,
     methods: ["POST", "GET", "PUT", "PATCH"],
-    origin: ["http://localhost:5173"],
+    origin: ["https://mern-live-chat-app.netlify.app/"],
   })
 );
 app.use(express.json());

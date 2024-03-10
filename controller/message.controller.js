@@ -6,6 +6,7 @@ const Chat = require("../model/Chats.model");
 //@route           GET /api/Message/:chatId
 //@access          Protected
 const allMessages = async (req, res, next) => {
+  console.log("sadfds");
   try {
     const messages = await Message.find({ chat: req.params.chatId })
       .populate("sender", "name pic email")
